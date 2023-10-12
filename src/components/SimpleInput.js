@@ -1,62 +1,51 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
 import {
   buttonStyle,
   errorStyle,
   inputStyle,
 } from '../styles/simple-input-style';
+import useValidation from '../hooks/use-validation';
 
 const SimpleInput = () => {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredNameTouched, setEnteredNameTouched] =
-    useState(false);
-  const [enteredEmailTouched, setEnteredEmailTouched] =
-    useState(false);
+  const isNameInputValid = (nameInput) => {
+    return nameInput.trim().length > 2;
+  };
 
-  // 유효성 검사 로직
-  const enteredNameIsValid = enteredName.trim().length > 2;
-  const enteredEmailIsValid = enteredEmail
-    .toString()
-    .includes('@');
-  const nameInputIsInvalid =
-    !enteredNameIsValid && enteredNameTouched;
-  const emailInputIsInvalid =
-    !enteredEmailIsValid && enteredEmailTouched;
+  const isEmailInputValid = (emailInput) => {
+    return emailInput.toString().includes('@');
+  };
+
+  const {
+    enteredInput: enteredName,
+    inputIsValid: enteredNameIsValid,
+    inputIsInvalid: nameInputIsInvalid,
+    inputChangeHandler: nameInputChangeHandler,
+    inputBlurHandler: nameInputBlurHanlder,
+    cleanUp: cleanUpNameInput,
+  } = useValidation(isNameInputValid);
+
+  const {
+    enteredInput: enteredEmail,
+    inputIsValid: enteredEmailIsValid,
+    inputIsInvalid: emailInputIsInvalid,
+    inputChangeHandler: emailInputChangeHandler,
+    inputBlurHandler: emailInputBlurHandler,
+    cleanUp: cleanUpEmailInput,
+  } = useValidation(isEmailInputValid);
 
   let formIsValid = false;
   if (enteredNameIsValid && enteredEmailIsValid) {
     formIsValid = true;
   }
 
-  const nameInputBlurHanlder = (event) => {
-    setEnteredNameTouched(true);
-  };
-
-  const emailInputBlurHandler = (event) => {
-    setEnteredEmailTouched(true);
-  };
-
-  const nameInputChangeHandler = (event) => {
-    setEnteredName(event.target.value);
-  };
-
-  const emailInputChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-  };
-
   const formSubmissionHandler = (event) => {
     event.preventDefault();
-    setEnteredNameTouched(true);
-    setEnteredEmailTouched(true);
-    if (!enteredNameIsValid || !enteredEmailIsValid) {
+    if (!formIsValid) {
       return;
     }
     console.log(enteredName, enteredEmail);
-    setEnteredName(''); // 초기화
-    setEnteredEmail('');
-    setEnteredNameTouched(false);
-    setEnteredEmailTouched(false);
+    cleanUpNameInput();
+    cleanUpEmailInput();
   };
 
   return (
