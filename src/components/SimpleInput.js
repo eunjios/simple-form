@@ -8,17 +8,24 @@ import {
 
 const SimpleInput = () => {
   const [enteredName, setEnteredName] = useState('');
+  const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredNameTouched, setEnteredNameTouched] =
     useState(false);
+  const [enteredEmailTouched, setEnteredEmailTouched] =
+    useState(false);
 
+  // 유효성 검사 로직
   const enteredNameIsValid = enteredName.trim().length > 2;
+  const enteredEmailIsValid = enteredEmail
+    .toString()
+    .includes('@');
   const nameInputIsInvalid =
     !enteredNameIsValid && enteredNameTouched;
-
-  const ageInputIsValid = true;
+  const emailInputIsInvalid =
+    !enteredEmailIsValid && enteredEmailTouched;
 
   let formIsValid = false;
-  if (enteredNameIsValid && ageInputIsValid) {
+  if (enteredNameIsValid && enteredEmailIsValid) {
     formIsValid = true;
   }
 
@@ -26,20 +33,30 @@ const SimpleInput = () => {
     setEnteredNameTouched(true);
   };
 
+  const emailInputBlurHandler = (event) => {
+    setEnteredEmailTouched(true);
+  };
+
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
+  };
+
+  const emailInputChangeHandler = (event) => {
+    setEnteredEmail(event.target.value);
   };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     setEnteredNameTouched(true);
-    if (!enteredNameIsValid) {
-      // enteredNameIsValid의 최신값을 가져옴
+    setEnteredEmailTouched(true);
+    if (!enteredNameIsValid || !enteredEmailIsValid) {
       return;
     }
-    console.log(enteredName);
+    console.log(enteredName, enteredEmail);
     setEnteredName(''); // 초기화
+    setEnteredEmail('');
     setEnteredNameTouched(false);
+    setEnteredEmailTouched(false);
   };
 
   return (
@@ -58,6 +75,22 @@ const SimpleInput = () => {
       {nameInputIsInvalid && (
         <p css={errorStyle(nameInputIsInvalid)}>
           name must not be empty
+        </p>
+      )}
+      <div>
+        <label htmlFor="email">이메일</label>
+        <input
+          css={inputStyle(emailInputIsInvalid)}
+          type="text"
+          id="email"
+          value={enteredEmail}
+          onChange={emailInputChangeHandler}
+          onBlur={emailInputBlurHandler}
+        />
+      </div>
+      {emailInputIsInvalid && (
+        <p css={errorStyle(emailInputIsInvalid)}>
+          email must include '@'
         </p>
       )}
       <div>
