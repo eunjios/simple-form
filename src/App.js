@@ -6,7 +6,7 @@ import { card, center } from './styles/app-style';
 function App() {
   return (
     <div css={[card, center]}>
-      <h2>Form</h2>
+      <h2>폼 연습하기</h2>
       <Form />
     </div>
   );

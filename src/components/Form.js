@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import useForm from '../hooks/use-form';
 import {
-  buttonStyle,
-  errorStyle,
-  inputStyle,
-} from '../styles/simple-input-style';
+  actionStyle,
+  advancedInputStyle,
+  iconStyle,
+  inputWithIconContainer,
+  submitButtonStyle,
+} from '../styles/form-style';
 
 const Form = () => {
   const nameReg = /^[가-힣]{2,4}$/;
@@ -16,7 +18,9 @@ const Form = () => {
     enteredInput: enteredName,
     isEnteredValid: isNameValid,
     isInputInvalid: isNameInvalid,
+    inputIcon: nameInputIcon,
     inputChangeHandler: nameChangeHandler,
+    inputFocusHandler: nameFocusHandler,
     inputBlurHandler: nameBlurHandler,
     cleanUp: cleanUpName,
   } = useForm(nameReg);
@@ -25,6 +29,7 @@ const Form = () => {
     enteredInput: enteredEmail,
     isEnteredValid: isEmailValid,
     isInputInvalid: isEmailInvalid,
+    inputIcon: emailInputIcon,
     inputChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     cleanUp: cleanUpEmail,
@@ -34,6 +39,7 @@ const Form = () => {
     enteredInput: enteredJob,
     isEnteredValid: isJobValid,
     isInputInvalid: isJobInvalid,
+    inputIcon: jobInputIcon,
     inputChangeHandler: jobChangeHandler,
     inputBlurHandler: jobBlurHandler,
     cleanUp: cleanUpJob,
@@ -55,61 +61,62 @@ const Form = () => {
     <form onSubmit={formSubmitHandler}>
       <div>
         <label htmlFor="name">이름</label>
-        <input
-          id="name"
-          type="text"
-          value={enteredName}
-          onChange={nameChangeHandler}
-          onBlur={nameBlurHandler}
-          css={inputStyle(isNameInvalid)}
-        />
-        {isNameInvalid && (
-          <span css={errorStyle(isNameInvalid)}>
-            INVALID!!
-          </span>
-        )}
+        <div css={inputWithIconContainer}>
+          <input
+            id="name"
+            type="text"
+            value={enteredName}
+            onChange={nameChangeHandler}
+            onFocus={nameFocusHandler}
+            onBlur={nameBlurHandler}
+            css={advancedInputStyle(isNameInvalid)}
+          />
+
+          <i css={iconStyle(isNameInvalid)}>
+            {nameInputIcon}
+          </i>
+        </div>
       </div>
       <div>
         <label htmlFor="email">이메일</label>
-        <input
-          id="email"
-          type="email"
-          value={enteredEmail}
-          onChange={emailChangeHandler}
-          onBlur={emailBlurHandler}
-          css={inputStyle(isEmailInvalid)}
-        />
-        {isEmailInvalid && (
-          <span css={errorStyle(isEmailInvalid)}>
-            INVALID!!
-          </span>
-        )}
+        <div css={inputWithIconContainer}>
+          <input
+            id="email"
+            type="email"
+            value={enteredEmail}
+            onChange={emailChangeHandler}
+            onBlur={emailBlurHandler}
+            css={advancedInputStyle(isEmailInvalid)}
+          />
+          <i css={iconStyle(isEmailInvalid)}>
+            {emailInputIcon}
+          </i>
+        </div>
       </div>
       <div>
         <label htmlFor="job">직업</label>
-        <input
-          id="job"
-          type="text"
-          value={enteredJob}
-          onChange={jobChangeHandler}
-          onBlur={jobBlurHandler}
-          css={inputStyle(isJobInvalid)}
-        />
-        {isJobInvalid && (
-          <span css={errorStyle(isJobInvalid)}>
-            INVALID!!
-          </span>
-        )}
+        <div css={inputWithIconContainer}>
+          <input
+            id="job"
+            type="text"
+            value={enteredJob}
+            onChange={jobChangeHandler}
+            onBlur={jobBlurHandler}
+            css={advancedInputStyle(isJobInvalid)}
+          />
+          <i css={iconStyle(isJobInvalid)}>
+            {jobInputIcon}
+          </i>
+        </div>
       </div>
-      <div>
+      <div css={actionStyle}>
         <button
           disabled={!isFormValid}
-          css={buttonStyle(!isFormValid)}
+          css={submitButtonStyle(!isFormValid)}
         >
           제출하기
         </button>
       </div>
-      {isFormValid && <div>VALID</div>}
     </form>
   );
 };
