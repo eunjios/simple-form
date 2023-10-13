@@ -4,14 +4,22 @@ import {
   errorStyle,
   inputStyle,
 } from '../styles/simple-input-style';
-import useValidation from '../hooks/use-validation';
+import useValidation, {
+  ValidationFunction,
+} from '../hooks/use-validation';
 
-const SimpleInput = () => {
-  const isNameInputValid = (nameInput) => {
+interface SimpleInputProps {}
+
+const SimpleInput: React.FC<SimpleInputProps> = () => {
+  const isNameInputValid: ValidationFunction = (
+    nameInput
+  ) => {
     return nameInput.trim().length > 2;
   };
 
-  const isEmailInputValid = (emailInput) => {
+  const isEmailInputValid: ValidationFunction = (
+    emailInput
+  ) => {
     return emailInput.toString().includes('@');
   };
 
@@ -38,7 +46,9 @@ const SimpleInput = () => {
     formIsValid = true;
   }
 
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler: React.FormEventHandler<
+    HTMLFormElement
+  > = (event) => {
     event.preventDefault();
     if (!formIsValid) {
       return;
@@ -53,7 +63,9 @@ const SimpleInput = () => {
       <div>
         <label htmlFor="name">이름</label>
         <input
-          css={inputStyle(nameInputIsInvalid)}
+          css={inputStyle({
+            inputIsInvalid: nameInputIsInvalid,
+          })}
           type="text"
           id="name"
           value={enteredName}
@@ -62,14 +74,20 @@ const SimpleInput = () => {
         />
       </div>
       {nameInputIsInvalid && (
-        <p css={errorStyle(nameInputIsInvalid)}>
+        <p
+          css={errorStyle({
+            inputIsInvalid: nameInputIsInvalid,
+          })}
+        >
           name must not be empty
         </p>
       )}
       <div>
         <label htmlFor="email">이메일</label>
         <input
-          css={inputStyle(emailInputIsInvalid)}
+          css={inputStyle({
+            inputIsInvalid: emailInputIsInvalid,
+          })}
           type="text"
           id="email"
           value={enteredEmail}
@@ -78,14 +96,20 @@ const SimpleInput = () => {
         />
       </div>
       {emailInputIsInvalid && (
-        <p css={errorStyle(emailInputIsInvalid)}>
+        <p
+          css={errorStyle({
+            inputIsInvalid: emailInputIsInvalid,
+          })}
+        >
           email must include '@'
         </p>
       )}
       <div>
         <button
           disabled={!formIsValid}
-          css={buttonStyle(nameInputIsInvalid)}
+          css={buttonStyle({
+            inputIsInvalid: nameInputIsInvalid,
+          })}
         >
           Submit
         </button>
