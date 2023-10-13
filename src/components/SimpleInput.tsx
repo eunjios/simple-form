@@ -88,7 +88,7 @@ const SimpleInput: React.FC<SimpleInputProps> = () => {
           css={inputStyle({
             inputIsInvalid: emailInputIsInvalid,
           })}
-          type="text"
+          type="email"
           id="email"
           value={enteredEmail}
           onChange={emailInputChangeHandler}
