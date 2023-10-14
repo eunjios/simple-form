@@ -19,8 +19,7 @@
 
 > UX를 고려하여 폼의 유효성을 검사하는 프로젝트
 
-https://github.com/eunjios/simple-form/assets/77034159/92f29f35-2a0a-4f30-bb66-2f9d24564321
-
+https://github.com/eunjios/simple-form/assets/77034159/c751bf60-3fb2-4efa-a37a-029632604306
 
 
 ### Goals
