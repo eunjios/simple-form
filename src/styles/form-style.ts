@@ -8,7 +8,9 @@ export const inputWithIconContainer = css`
   }
 `;
 
-export const advancedInputStyle = (isInvalid) => css`
+export const advancedInputStyle = (
+  isInvalid: boolean
+) => css`
   width: 100%;
   border: 1px solid ${!isInvalid ? '#ddd' : 'salmon'};
   border-radius: 8px;
@@ -24,7 +26,7 @@ export const advancedInputStyle = (isInvalid) => css`
   }
 `;
 
-export const iconStyle = (isInvalid) => css`
+export const iconStyle = (isInvalid: boolean) => css`
   position: absolute;
   right: 0;
   top: 8px;
@@ -41,7 +43,9 @@ export const actionStyle = css`
   box-sizing: border-box;
 `;
 
-export const submitButtonStyle = (isInvalid) => css`
+export const submitButtonStyle = (
+  isInvalid: boolean
+) => css`
   cursor: ${isInvalid ? 'not-allowed' : 'pointer'};
   padding: 12px;
   width: 100%;

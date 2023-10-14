@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import React, { FormEvent } from 'react';
 import useForm from '../hooks/use-form';
 import {
   actionStyle,
@@ -8,7 +9,7 @@ import {
   submitButtonStyle,
 } from '../styles/form-style';
 
-const Form = () => {
+const Form: React.FC = () => {
   const nameReg = /^[가-힣]{2,4}$/;
   const emailReg =
     /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
@@ -20,7 +21,6 @@ const Form = () => {
     isInputInvalid: isNameInvalid,
     inputIcon: nameInputIcon,
     inputChangeHandler: nameChangeHandler,
-    inputFocusHandler: nameFocusHandler,
     inputBlurHandler: nameBlurHandler,
     cleanUp: cleanUpName,
   } = useForm(nameReg);
@@ -50,7 +50,9 @@ const Form = () => {
     isFormValid = true;
   }
 
-  const formSubmitHandler = (event) => {
+  const formSubmitHandler = (
+    event: FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     cleanUpName();
     cleanUpEmail();
@@ -67,7 +69,6 @@ const Form = () => {
             type="text"
             value={enteredName}
             onChange={nameChangeHandler}
-            onFocus={nameFocusHandler}
             onBlur={nameBlurHandler}
             css={advancedInputStyle(isNameInvalid)}
           />
