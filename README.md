@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# 📋 폼 연습하기
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [About](#about)
+  - [Goals](#goals)
+  - [Built with](#built-with)
+- [Features](#features)
+  - [유효성 검증](#유효성-검증)
+  - [커스텀 훅](#커스텀-훅)
+  - [UI/UX](#uiux)
+- [Troubleshooting](#troubleshooting)
+  - [react-icons 리턴 이슈](#react-icons-리턴-이슈)
+- [Todos](#todos)
 
-## Available Scripts
+## About
 
-In the project directory, you can run:
+![React](https://img.shields.io/badge/React-424242?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-424242?style=flat-square&logo=TypeScript)
+![Emotion](https://img.shields.io/badge/👩‍🎤%20Emotion-424242?style=flat-square)
 
-### `yarn start`
+> UX를 고려하여 폼의 유효성을 검사하는 프로젝트
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Goals
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Custom hooks 으로 로직 분리하기
+2. Custom hooks 을 활용하여 코드의 재사용성 높이기
+3. Emotion 사용하여 스타일링 하기
+4. JavaScript에서 TypeScript로 바꿔보기
 
-### `yarn test`
+### Built with
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React
+- TypeScript
+- JavaScript
+- Emotion
+- React Icons
+- yarn
 
-### `yarn build`
+## Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 유효성 검증
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 정규식을 사용하여 각 입력의 유효성 검증
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  ```ts
+  const nameReg: RegExp = /^[가-힣]{2,4}$/;
+  const emailReg: RegExp =
+    /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+  const jobReg: RegExp = /^[가-힣]+$/;
+  ```
 
-### `yarn eject`
+### 커스텀 훅
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- 폼의 모든 입력에 사용될 수 있는 제네릭한 커스텀 훅 (useForm) 구현
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### UI/UX
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- 사용자로부터 이름, 이메일, 직업을 입력 받을 수 있는 폼 컴포넌트 구현
+- 입력 상태에 따라 조건부 스타일링
+  ```ts
+  export const submitButtonStyle = (
+    isInvalid: boolean
+  ) => css`
+    /* 중략 */
+    cursor: ${isInvalid ? 'not-allowed' : 'pointer'};
+    background: ${isInvalid ? '' : '#4fe0b6'};
+    color: ${isInvalid ? '' : '#fff'};
+  `;
+  ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Troubleshooting
 
-## Learn More
+### react-icons 리턴 이슈
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**문제 상황**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+TypeScript로 바꾼 후 react-icons가 리턴이 되지 않고 다음 오류가 발생
 
-### Code Splitting
+> "Parsing error: '>' expected.eslint 'BsCheck' refers to a value, but is being used as a type here. Did you mean 'typeof BsCheck'?ts(2749)"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**해결 방법**
 
-### Analyzing the Bundle Size
+- [스택 오버플로우](https://stackoverflow.com/questions/69248594/cant-use-react-icons-component-as-an-object-value-typescript) 를 참고하여 .ts 파일을 .tsx 파일로 바꿨으나 새로운 에러 발생
+  > 'React' refers to a UMD global, but the current file is a module
+- `import React from 'react';` 를 추가하여 해결
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Todos
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [x] 컴포넌트 구현
+- [x] 커스텀 훅 로직 구현
+- [x] UI/UX 개선
+- [x] 타입스크립트로 변경
+- [ ] 폼 제출 시 HTTP 요청
